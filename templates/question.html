@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Вопрос {{ quiz.correct }}/{{ quiz.total }}</h3>
+<p><b>Подсказка:</b> {{ prompt }}</p>
+<form method="post">{% csrf_token %}
+  {{ form.as_p }}
+  <button>Ответить</button>
+</form>
+{% endblock %}

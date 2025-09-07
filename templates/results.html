@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Результаты</h3>
+<p>Верных ответов: {{ quiz.correct }} из {{ quiz.total }}</p>
+<ol>
+{% for a in attempts %}
+  <li>
+    {{ a.country.name }} — {{ a.country.capital }} |
+    Ваш ответ: "{{ a.user_answer }}" — {% if a.is_correct %}верно{% else %}ошибка{% endif %}
+  </li>
+{% endfor %}
+</ol>
+<a href="/start/">Новая попытка</a>
+{% endblock %}

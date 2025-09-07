@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Справочник стран</h3>
+<table>
+<tr><th>Страна</th><th>Столица</th><th>Регион</th></tr>
+{% for c in items %}
+<tr><td>{{ c.name }}</td><td>{{ c.capital }}</td><td>{{ c.region }}</td></tr>
+{% endfor %}
+</table>
+{% endblock %}

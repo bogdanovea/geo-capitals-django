@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Загрузка CSV</h3>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button>Загрузить</button>
+</form>
+<p>Ожидаемые колонки: <code>name,capital,region</code></p>
+{% endblock %}
