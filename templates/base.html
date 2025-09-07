@@ -1,17 +1,23 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8"><title>Geo Quiz</title>
-  <link rel="stylesheet" href="/static/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Geo Quiz</title>
+  <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
-  <nav>
-    <a href="/">Главная</a> |
-    <a href="/upload/">Загрузка CSV</a> |
-    <a href="/countries/">Справочник</a> |
-    <a href="/start/">Старт квиза</a>
-  </nav>
-  <hr>
-  {% block content %}{% endblock %}
-</body>
-</html>
+  <header class="nav-bar">
+    <div class="brand"><a href="/">🌍 Geo&nbsp;Quiz</a></div>
+    <nav class="nav-links">
+      <a href="/upload/">Загрузка CSV</a>
+      <a href="/countries/">Справочник</a>
+      <a class="btn btn-secondary" href="/start/">Старт квиза</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="f

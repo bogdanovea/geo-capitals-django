@@ -1,6 +1,7 @@
 import csv
 import io
 import random
+import re
 
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -61,6 +62,15 @@ def question(request):
     qs = Country.objects.all()
     if quiz.region:
         qs = qs.filter(region__iexact=quiz.region)
+    
+    def check_correct(quiz_mode, ans, country):
+        def re_sub(string):
+            return re.sub('[^a-z]', '', string.lower())
+
+        return (
+            (quiz_mode == 'c2cap' and re_sub(ans) == re_sub(country.capital)) or
+            (quiz_mode == 'cap2c' and re_sub(ans) == re_sub(country.name))
+        )
 
     remaining = list(qs.exclude(id__in=asked).values_list('id', flat=True))
     if not remaining or Attempt.objects.filter(quiz=quiz).count() >= quiz.total:
@@ -73,10 +83,7 @@ def question(request):
             country = Country.objects.get(id=cid)
 
             ans = form.cleaned_data['answer'].strip()
-            correct = (
-                (quiz.direction == 'c2cap' and ans.lower() == country.capital.lower()) or
-                (quiz.direction == 'cap2c' and ans.lower() == country.name.lower())
-            )
+            correct = check_correct(quiz.direction, ans, country)
             Attempt.objects.create(quiz=quiz, country=country, user_answer=ans, is_correct=correct)
             if correct:
                 quiz.correct += 1

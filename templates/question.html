@@ -1,10 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
-<h3>Вопрос {{ quiz.current_num }}/{{ quiz.total }}</h3>
-<h5>Правильных ответов: {{ quiz.correct }}</h5>
-<p><b>{{ task }}:</b> {{ prompt }}</p>
-<form method="post">{% csrf_token %}
-  {{ form.as_p }}
-  <button>Ответить</button>
-</form>
+<section class="card">
+  <div class="question-head">
+    <h2>Вопрос {{ quiz.current_num|default_if_none:"" }}/{{ quiz.total }}</h2>
+    <span class="pill">Верных: {{ quiz.correct }}</span>
+  </div>
+
+  <div class="prompt">
+    {% if task %}<p class="muted">{{ task }}</p>{% endif %}
+    <p class="prompt-text">{{ prompt }}</p>
+  </div>
+
+  <form method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">Ответить</button>
+  </form>
+</section>
 {% endblock %}

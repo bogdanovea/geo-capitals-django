@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Geo Quiz</h2>
-<p>Загрузите список стран и столиц, затем начните квиз.</p>
+<section class="card hero">
+  <h1>Тренажёр «Страны — Столицы»</h1>
+  <p class="muted">Загрузите данные, выберите режим и проверьте себя.</p>
+  <div class="actions">
+    <a class="btn btn-primary" href="/start/">Начать квиз</a>
+    <a class="btn" href="/upload/">Загрузить CSV</a>
+    <a class="btn" href="/countries/">Справочник</a>
+  </div>
+</section>
 {% endblock %}
