@@ -1,13 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
 <section class="card">
-  <div class="question-head">
-    <h2>Вопрос {{ quiz.current_num|default_if_none:"" }}/{{ quiz.total }}</h2>
+
+  <!-- Прогресс-бар -->
+  <div class="progress" style="--cells: {{ quiz.total }};"
+       aria-label="Прогресс квиза" role="progressbar"
+       aria-valuemin="0" aria-valuemax="{{ quiz.total }}" aria-valuenow="{{ answered|length }}">
+    {% for ok in answered %}
+      <div class="progress__cell {% if ok %}ok{% else %}bad{% endif %}"></div>
+    {% endfor %}
+    {% for _ in remaining_range %}
+      <div class="progress__cell"></div>
+    {% endfor %}
+  </div>
+
+  <div class="question-head" style="margin-top:10px">
+    <h2>Вопрос {{ answered|length|add:1 }}/{{ quiz.total }}</h2>
     <span class="pill">Верных: {{ quiz.correct }}</span>
   </div>
 
   <div class="prompt">
-    {% if task %}<p class="muted">{{ task }}</p>{% endif %}
     <p class="prompt-text">{{ prompt }}</p>
   </div>
 

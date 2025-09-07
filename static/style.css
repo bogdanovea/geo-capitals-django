@@ -94,3 +94,60 @@ input:focus, select:focus, textarea:focus{
   max-width:920px; margin:24px auto 40px; padding:0 16px;
   color:var(--muted); font-size:14px;
 }
+
+.messages { margin:12px 0 20px }
+.msg{
+  margin-bottom:8px;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid #ffe58f;
+  background:#fffbe6;
+  color:#614700;
+  box-shadow:0 8px 16px rgba(0,0,0,.05);
+}
+
+.msg.success{ border-color:#bbf7d0; background:#ecfdf5; color:#065f46 }
+.msg.error  { border-color:#fecaca; background:#fef2f2; color:#7f1d1d }
+.msg.warning, .msg.info{ border-color:#ffe58f; background:#fffbe6; color:#614700 }
+
+.messages.toast {
+  position: fixed; top:16px; right:16px; z-index: 1000; width: min(360px, 90vw);
+}
+
+.msg{
+  margin-bottom:8px;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid #ffe58f;
+  background:#fffbe6;
+  color:#614700;
+  box-shadow:0 8px 16px rgba(0,0,0,.05);
+  opacity:1;
+  transform: translateY(0);
+  transition: opacity .3s ease, transform .3s ease;
+}
+.msg.fade-out{
+  opacity:0;
+  transform: translateY(-4px);
+}
+
+/* SEGMENTED PROGRESS BAR */
+.progress{
+  /* количество колонок подаём через CSS-переменную --cells */
+  display: grid;
+  grid-template-columns: repeat(var(--cells, 10), 1fr);
+  gap: 3px;                      /* это и есть «разделители» */
+  background: #cbd5e1;           /* цвет разделителей/фона сетки (slate-300) */
+  padding: 3px;                  /* рамка вокруг всей полосы */
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.progress__cell{
+  height: 12px;
+  background: #e5e7eb;           /* нейтральный (gray-200) */
+  border-radius: 6px;
+  transition: background .2s ease;
+}
+.progress__cell.ok{ background: #10b981; }   /* зелёный — верно */
+.progress__cell.bad{ background: #ef4444; }  /* красный — ошибка */
+
