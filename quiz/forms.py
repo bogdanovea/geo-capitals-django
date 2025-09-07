@@ -9,4 +9,5 @@ class StartQuizForm(forms.Form):
     total = forms.IntegerField(min_value=1, max_value=50, initial=10)
 
 class AnswerForm(forms.Form):
+    cid = forms.IntegerField(widget=forms.HiddenInput())
     answer = forms.CharField()

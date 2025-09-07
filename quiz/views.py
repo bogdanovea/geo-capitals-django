@@ -4,8 +4,10 @@ from django.db.models import Q
 from .models import Country, QuizRun, Attempt
 from .forms import UploadCSVForm, StartQuizForm, AnswerForm
 
+
 def home(request):
     return render(request, "home.html")
+
 
 def upload_countries(request):
     if request.method == "POST":
@@ -25,9 +27,11 @@ def upload_countries(request):
         form = UploadCSVForm()
     return render(request, "upload.html", {"form": form})
 
+
 def countries_list(request):
     items = Country.objects.all().order_by('name')
     return render(request, "countries_list.html", {"items": items})
+
 
 def start_quiz(request):
     if request.method == "POST":
@@ -45,6 +49,7 @@ def start_quiz(request):
         form = StartQuizForm()
     return render(request, "start.html", {"form": form})
 
+
 def question(request):
     quiz_id = request.session.get('quiz_id')
     quiz = get_object_or_404(QuizRun, id=quiz_id)
@@ -58,12 +63,12 @@ def question(request):
     if not remaining or Attempt.objects.filter(quiz=quiz).count() >= quiz.total:
         return redirect("results")
 
-    cid = random.choice(remaining)
-    country = Country.objects.get(id=cid)
-
     if request.method == "POST":
         form = AnswerForm(request.POST)
         if form.is_valid():
+            cid = form.cleaned_data['cid']
+            country = Country.objects.get(id=cid)
+
             ans = form.cleaned_data['answer'].strip()
             correct = (
                 (quiz.direction == 'c2cap' and ans.lower() == country.capital.lower()) or
@@ -77,7 +82,12 @@ def question(request):
             request.session['asked_ids'] = list(asked)
             return redirect("question")
     else:
-        form = AnswerForm()
+        remaining = list(qs.exclude(id__in=asked).values_list('id', flat=True))
+        if not remaining:
+            return redirect("results")
+        cid = random.choice(remaining)
+        country = Country.objects.get(id=cid)
+        form = AnswerForm(initial={'cid': cid})
 
     prompt = country.name if quiz.direction == 'c2cap' else country.capital
     return render(request, "question.html", {"form": form, "prompt": prompt, "quiz": quiz})
