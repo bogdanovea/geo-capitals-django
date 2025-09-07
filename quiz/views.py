@@ -78,6 +78,8 @@ def question(request):
             if correct:
                 quiz.correct += 1
                 quiz.save(update_fields=['correct'])
+            quiz.current_num += 1
+            quiz.save(update_fields=['current_num'])
             asked.add(country.id)
             request.session['asked_ids'] = list(asked)
             return redirect("question")
@@ -90,7 +92,8 @@ def question(request):
         form = AnswerForm(initial={'cid': cid})
 
     prompt = country.name if quiz.direction == 'c2cap' else country.capital
-    return render(request, "question.html", {"form": form, "prompt": prompt, "quiz": quiz})
+    question = "Назовите столицу" if quiz.direction == 'c2cap' else "Назовите страну"
+    return render(request, "question.html", {"form": form, "prompt": prompt, "question": question, "quiz": quiz})
 
 def results(request):
     quiz_id = request.session.get('quiz_id')

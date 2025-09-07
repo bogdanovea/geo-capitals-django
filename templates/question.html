@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<h3>Вопрос {{ quiz.correct }}/{{ quiz.total }}</h3>
-<p><b>Подсказка:</b> {{ prompt }}</p>
+<h3>Вопрос {{ quiz.current_num }}/{{ quiz.total }}</h3>
+<h5>Правильных ответов: {{ quiz.correct }}</h5>
+<p><b>{{ question }}:</b> {{ prompt }}</p>
 <form method="post">{% csrf_token %}
   {{ form.as_p }}
   <button>Ответить</button>

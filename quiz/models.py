@@ -4,7 +4,7 @@ from django.db import models
 class Country(models.Model):
     name = models.CharField(max_length=100, unique=True)
     capital = models.CharField(max_length=100)
-    region = models.CharField(max_length=100, blank=True)  # например: Europe, Asia
+    region = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return f"{self.name} — {self.capital}"
@@ -19,6 +19,7 @@ class QuizRun(models.Model):
     direction = models.CharField(max_length=6, choices=DIRECTION_CHOICES)
     total = models.IntegerField(default=10)
     correct = models.IntegerField(default=0)
+    current_num = models.IntegerField(default=1)
     region = models.CharField(max_length=100, blank=True)
 
 
