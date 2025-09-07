@@ -1,8 +1,10 @@
 from django import forms
 from .models import Country
 
+
 class UploadCSVForm(forms.Form):
     file = forms.FileField(help_text="CSV с колонками: name,capital,region")
+
 
 class StartQuizForm(forms.Form):
     direction = forms.ChoiceField(
@@ -22,6 +24,7 @@ class StartQuizForm(forms.Form):
                       .order_by('region'))
         choices = [('', 'Любой регион')] + [(r, r) for r in regions_qs]
         self.fields['region'].choices = choices
+
 
 class AnswerForm(forms.Form):
     cid = forms.IntegerField(widget=forms.HiddenInput())

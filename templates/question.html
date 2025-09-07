@@ -2,7 +2,7 @@
 {% block content %}
 <h3>Вопрос {{ quiz.current_num }}/{{ quiz.total }}</h3>
 <h5>Правильных ответов: {{ quiz.correct }}</h5>
-<p><b>{{ question }}:</b> {{ prompt }}</p>
+<p><b>{{ task }}:</b> {{ prompt }}</p>
 <form method="post">{% csrf_token %}
   {{ form.as_p }}
   <button>Ответить</button>

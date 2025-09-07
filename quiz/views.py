@@ -1,6 +1,9 @@
-import csv, io, random
+import csv
+import io
+import random
+
 from django.shortcuts import render, redirect, get_object_or_404
-from django.db.models import Q
+
 from .models import Country, QuizRun, Attempt
 from .forms import UploadCSVForm, StartQuizForm, AnswerForm
 
@@ -92,8 +95,8 @@ def question(request):
         form = AnswerForm(initial={'cid': cid})
 
     prompt = country.name if quiz.direction == 'c2cap' else country.capital
-    question = "Назовите столицу" if quiz.direction == 'c2cap' else "Назовите страну"
-    return render(request, "question.html", {"form": form, "prompt": prompt, "question": question, "quiz": quiz})
+    task = "Назовите столицу" if quiz.direction == 'c2cap' else "Назовите страну"
+    return render(request, "question.html", {"form": form, "prompt": prompt, "task": task, "quiz": quiz})
 
 def results(request):
     quiz_id = request.session.get('quiz_id')
